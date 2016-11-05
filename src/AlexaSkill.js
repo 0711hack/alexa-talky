@@ -10,6 +10,12 @@
 
 'use strict';
 
+var crypto = require("crypto");
+
+function sha256(data) {
+    return crypto.createHash("sha256").update(data).digest("base64");
+}
+
 function AlexaSkill(appId) {
     this._appId = appId;
 }
@@ -131,9 +137,11 @@ function createSpeechObject(optionsParam) {
 Response.prototype = (function () {
     var buildSpeechletResponse = function (options) {
         var alexaResponse = {
-            outputSpeech: createSpeechObject(options.output),
             shouldEndSession: options.shouldEndSession
         };
+        if (options.output) {
+            alexaResponse.outputSpeech = createSpeechObject(options.output);
+        }
         if (options.reprompt) {
             alexaResponse.reprompt = {
                 outputSpeech: createSpeechObject(options.reprompt)
@@ -152,6 +160,9 @@ Response.prototype = (function () {
         };
         if (options.session && options.session.attributes) {
             returnResult.sessionAttributes = options.session.attributes;
+        }
+        if (options.directives) {
+            returnResult.directives = options.directives;
         }
         return returnResult;
     };
@@ -190,7 +201,24 @@ Response.prototype = (function () {
                 cardContent: cardContent,
                 shouldEndSession: false
             }));
-        }
+        },
+        play: function (url) {
+            this._context.succeed(buildSpeechletResponse({
+                session: this._session,
+                directives: [{
+                    "type": "AudioPlayer.Play",
+                    "playBehavior": "ENQUEUE",
+                    "audioItem": {
+                        "stream": {
+                            "token": sha256(url),
+                            "url": url,
+                            "offsetInMilliseconds": 0
+                        }
+                    }
+                  }]
+                shouldEndSession: false
+            }));
+        },
     };
 })();
 

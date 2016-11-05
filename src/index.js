@@ -79,6 +79,9 @@ HelloWorld.prototype.intentHandlers = {
     },
     "AskNameIntent": function (intent, session, response) {
         response.ask("Thanks for asking. My name is Alexa.", "Thanks for asking. My name is Alexa.");
+    },
+    "PlayIntent": function(intent, session, response) {
+        response.play("https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3");
     }
 };
 
