@@ -115,7 +115,7 @@ HelloWorld.prototype.intentHandlers = {
         rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am relaxed. What about you?");
     },
     "AskNameIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. My name is Alexa.");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. My name is Alexa. How do you feel?");
     },
     "RewardIntent": function(intent, session, response) {
         var speechOutput = {
@@ -125,10 +125,10 @@ HelloWorld.prototype.intentHandlers = {
         response.ask(speechOutput, "Well done.");
     },
     "IFeelPositiveIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.attributes.PositiveWord);
+        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.slots.PositiveWord + ". Where are you from?");
     },
     "IFeelNegativeIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name);
+        rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name + ". Where are you from?");
     }
 };
 
