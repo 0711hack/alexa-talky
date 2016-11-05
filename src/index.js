@@ -59,38 +59,54 @@ HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedReques
     // any cleanup logic goes here
 };
 
+function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
+    if (!session.attributes.successCounter) {
+        session.attributes.successCounter = 0;
+    } 
+    session.attributes.successCounter = parseInt(session.attributes.successCounter, 10) + 1;
+    if ((session.attributes.successCounter % 3) === 0) {
+        var speechOutput = {
+        speech: '<speak>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /> ' + nextQuestion + '</speak>',
+            type: AlexaSkill.speechOutputType.SSML
+        };
+        response.ask(speechOutput, "Well done. " + nextQuestion);
+    } else {
+        response.ask(nextQuestion, nextQuestion);
+    }
+}
+
 HelloWorld.prototype.intentHandlers = {
     // register custom intent handlers
     "MyNameIsIntent": function (intent, session, response) {
         session.attributes.Name = intent.slots.Name.value;
-        response.ask("How old are you, " + session.attributes.Name + "?", "How old are you, " + intent.slots.Name.value + "?");
+        rewardAndAskNextQuestion(intent, session, response, "How old are you, " + session.attributes.Name + "?");
     },
     "MyAgeIsIntent": function (intent, session, response) {
         session.attributes.Age = intent.slots.Age.value;
-        response.ask("Do you want to know something about me, " + session.attributes.Name + "?", "Do you want to know something about me, " + session.attributes.Name + "?");
+        rewardAndAskNextQuestion(intent, session, response, "Do you want to know something about me, " + session.attributes.Name + "?");
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);
-        response.ask("Thanks for asking. I am " + age + " years old. How do you feel?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am " + age + " years old. How do you feel?");
     },
     "AskFeelIntent": function (intent, session, response) {
-        response.ask("Thanks for asking. I am relaxed. What about you?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am relaxed. What about you?");
     },
     "AskNameIntent": function (intent, session, response) {
-        response.ask("Thanks for asking. My name is Alexa. How do you feel?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. My name is Alexa.");
     },
-    "PlayIntent": function(intent, session, response) {
+    "RewardIntent": function(intent, session, response) {
         var speechOutput = {
-            speech: '<speak><audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /></speak>',
+            speech: '<speak>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /></speak>',
             type: AlexaSkill.speechOutputType.SSML
         };
-        response.ask(speechOutput);
+        response.ask(speechOutput, "Well done.");
     },
     "IFeelPositiveIntent": function (intent, session, response) {
-        response.ask("I am happy to hear that you feel " + intent.attributes.Word);
+        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.attributes.Word);
     },
     "IFeelNegativeIntent": function (intent, session, response) {
-        response.ask("I am sad to hear that " + session.attributes.Name);
+        rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name);
     }
 };
 
