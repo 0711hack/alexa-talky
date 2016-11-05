@@ -1,2 +1,5 @@
 MyNameIsIntent My name is {Name}
 MyNameIsIntent You can call me {Name}
+
+MyAgeIsIntent I am {Age} years old
+MyAgeIsIntent I'm {Age} years old

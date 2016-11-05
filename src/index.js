@@ -62,8 +62,12 @@ HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedReques
 HelloWorld.prototype.intentHandlers = {
     // register custom intent handlers
     "MyNameIsIntent": function (intent, session, response) {
-        console.log(JSON.stringify(intent));
-        response.ask("How old are you?", "How old are you?");
+        session.attributes.Name = intent.slots.Name.value;
+        response.ask("How old are you, " + session.attributes.Name + "?", "How old are you, " + intent.slots.Name.value + "?");
+    },
+    "MyAgeIsIntent": function (intent, session, response) {
+        session.attributes.Age = intent.slots.Age.value;
+        response.ask("Do you want to know something about me, " + session.attributes.Name + "?", "Do you want to know something about me, " + session.attributes.Name + "?");
     }
 };
 
