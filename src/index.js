@@ -68,6 +68,17 @@ HelloWorld.prototype.intentHandlers = {
     "MyAgeIsIntent": function (intent, session, response) {
         session.attributes.Age = intent.slots.Age.value;
         response.ask("Do you want to know something about me, " + session.attributes.Name + "?", "Do you want to know something about me, " + session.attributes.Name + "?");
+    },
+    "AskAgeIntent": function (intent, session, response) {
+        var age = 3 + parseInt(session.attributes.Age, 10);
+        response.ask("Thanks for asking. I am " + age + " years old. How do you feel?", "Thanks for asking. I am " + age + " years old. How do you feel?");
+    },
+    "AskFeelIntent": function (intent, session, response) {
+
+        response.ask("Thanks for asking. I am relaxed. What about you?");
+    },
+    "AskNameIntent": function (intent, session, response) {
+        response.ask("Thanks for asking. My name is Alexa.", "Thanks for asking. My name is Alexa.");
     }
 };
 

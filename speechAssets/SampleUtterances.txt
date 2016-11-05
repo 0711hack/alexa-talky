@@ -3,3 +3,11 @@ MyNameIsIntent You can call me {Name}
 
 MyAgeIsIntent I am {Age} years old
 MyAgeIsIntent I'm {Age} years old
+
+AskAgeIntent How old are you
+AskAgeIntent How old are you Alexa
+
+AskFeelIntent How do you feel
+AskFeelIntent How do you feel Alexa
+
+AskNameIntent What is your name?

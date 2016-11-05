@@ -17,6 +17,15 @@
           "type": "AMAZON.NUMBER"
         }
       ]
+    },
+    {
+      "intent": "AskAgeIntent"
+    },
+    {
+      "intent": "AskFeelIntent"
+    },
+    {
+      "intent": "AskNameIntent"
     }
   ]
 }
