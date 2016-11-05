@@ -37,6 +37,15 @@
       ]
     },
     {
+      "intent": "MyWeatherIsIntent",
+      "slots": [
+        {
+          "name": "Weather",
+          "type": "Weather"
+        }
+      ]
+    },
+    {
       "intent": "IFeelPositiveIntent",
       "slots": [
         {

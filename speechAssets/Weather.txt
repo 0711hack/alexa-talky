@@ -1,0 +1,5 @@
+sunny
+cloudy
+rainy
+cold
+hot

@@ -93,7 +93,14 @@ HelloWorld.prototype.intentHandlers = {
     "MyUSCityIsIntent": function (intent, session, response) {
         session.attributes.City = intent.slots.USCity.value;
         session.attributes.Coutry = "US";
-        rewardAndAskNextQuestion(intent, session, response, "");
+        weatherForCity(session.attributes.Coutry, session.attributes.City, function(err, res) {
+            if (err) {
+                console.error(err);
+                rewardAndAskNextQuestion(intent, session, response, "Interesting. What was the weather like yesterday?");
+            } else {
+                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + "day. What was the weather like yesterday?");
+            }            
+        });
     },
     "MyDECityIsIntent": function (intent, session, response) {
         session.attributes.City = intent.slots.DECity.value;
@@ -105,7 +112,11 @@ HelloWorld.prototype.intentHandlers = {
             } else {
                 rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + "day. What was the weather like yesterday?");
             }            
-        });        
+        });
+    },
+    "MyWeatherIsIntent": function (intent, session, response) {
+        session.attributes.Weather = intent.slots.Weather.value;
+        rewardAndAskNextQuestion(intent, session, response, "Always fun to talk about the weather. Isn't it?");
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);

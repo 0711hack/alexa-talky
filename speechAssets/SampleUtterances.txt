@@ -31,3 +31,7 @@ MyDECityIsIntent I am living in {DECity}
 MyDECityIsIntent I am from {DECity}
 MyDECityIsIntent I am located at {DECity}
 MyDECityIsIntent I live in {DECity}
+
+MyWeatherIsIntent The weather is {Weather}
+MyWeatherIsIntent Yesterday was a {Weather} day
+MyWeatherIsIntent It is {Weather}
