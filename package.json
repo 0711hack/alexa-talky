@@ -10,6 +10,7 @@
     "nock": "8.1.0"
   },
   "dependencies": {
+    "googleapis": "git+ssh://git@github.com:postmen/google-api-nodejs-client.git",
     "request": "^2.78.0"
   }
 }

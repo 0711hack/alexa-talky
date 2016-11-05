@@ -32,6 +32,8 @@ var APP_ID; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
  */
 var AlexaSkill = require('./AlexaSkill');
 
+var printer = require('./printer');
+
 /**
  * HelloWorld is a child of AlexaSkill.
  * To read more about inheritance in JavaScript, see the link below.
@@ -53,7 +55,7 @@ HelloWorld.prototype.eventHandlers.onSessionStarted = function (sessionStartedRe
 
 HelloWorld.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("HelloWorld onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
-    response.ask("Welcome! Let's start with some chitcat. What is your name?", "What is your name?");
+    response.ask("Welcome! Let's start with some chitchat. What is your name?", "What is your name?");
 };
 
 HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
@@ -67,11 +69,16 @@ function rewardAndAskNextQuestion(intent, session, response, answerQuestion, nex
     } 
     session.attributes.successCounter = parseInt(session.attributes.successCounter, 10) + 1;
     if ((session.attributes.successCounter % 6) === 0) {
-        var speechOutput = {
-        speech: '<speak>' + answerQuestion + '<break strength="x-strong"/>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /><break strength="x-strong"/>' + nextQuestion + '</speak>',
-            type: AlexaSkill.speechOutputType.SSML
-        };
-        response.ask(speechOutput, answerQuestion + " Well done. " + nextQuestion);
+        printer.print(function(err) {
+            if (err) {
+                console.error(err);
+            }
+            var speechOutput = {
+            speech: '<speak>' + answerQuestion + '<break strength="x-strong"/>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /><break strength="x-strong"/>' + nextQuestion + '</speak>',
+                type: AlexaSkill.speechOutputType.SSML
+            };
+            response.ask(speechOutput, answerQuestion + " Well done. " + nextQuestion);
+        });
     } else {
         var speechOutput = {
         speech: '<speak>' + answerQuestion + '<break strength="x-strong"/>' + nextQuestion + '</speak>',
@@ -165,7 +172,7 @@ HelloWorld.prototype.intentHandlers = {
     },
     "MyWeatherIsIntent": function (intent, session, response) {
         session.attributes.Weather = intent.slots.Weather.value;
-        rewardAndAskNextQuestion(intent, session, response, "Always fun to talk about the weather. Isn't it?", "Goodbye!");
+        rewardAndAskNextQuestion(intent, session, response, "Always fun to talk about the weather. Isn't it?", "Goodbye! Hope to speak to you again soon.");
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);
