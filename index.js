@@ -10,6 +10,8 @@
 
 'use strict';
 
+var request = require("request");
+
 /**
  * This simple sample has no external dependencies or session management, and shows the most basic
  * example of how to create a Lambda function for handling Alexa Skill requests.
@@ -77,7 +79,44 @@ function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
 
 function weatherForCity(country, city, cb) {
     // a4864a1885b050d176c0c20ef1befbfb
-    cb(null, "sunny");
+    /*
+    {
+        "coord":{
+            "lon":9.18,
+            "lat":48.78
+        },
+        "weather":[
+            {"id":500,"main":"Rain","description":"light rain","icon":"10d"}
+        ],
+        "base":"stations",
+        "main":{
+            "temp":281.04,
+            "pressure":999,
+            "humidity":93,
+            "temp_min":280.15,
+            "temp_max":282.15
+        },
+        "visibility":10000,
+        "wind":{"speed":4.6,"deg":320},
+        "clouds":{"all":75},
+        "dt":1478355600,
+        "sys":{"type":1,"id":4891,"message":0.0229,"country":"DE","sunrise":1478326665,"sunset":1478361321},
+        "id":2825297,
+        "name":"Stuttgart",
+        "cod":200
+    }
+    */
+    request.get({
+        url: "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&APPID=a4864a1885b050d176c0c20ef1befbfb",
+        json: true
+    }, function (err, response, body) {
+        if (err) {
+            cb(err);
+        } else {
+            console.log(typeof body);
+            cb(null, body.weather[0].description);
+        }
+    });
 }
 
 HelloWorld.prototype.intentHandlers = {
