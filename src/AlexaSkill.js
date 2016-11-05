@@ -200,18 +200,7 @@ Response.prototype = (function () {
                 cardContent: cardContent,
                 shouldEndSession: false
             }));
-        },
-        play: function (url) {
-            this._context.succeed(buildSpeechletResponse({
-                session: this._session,
-                output: {
-                    type: "SSML",
-                    ssml: '<speak>test</speak>'
-                },
-                reprompt: "test",
-                shouldEndSession: false
-            }));
-        },
+        }
     };
 })();
 
