@@ -14,8 +14,10 @@ AskNameIntent What is your name
 AskNameIntent What's your name
 
 IFeelPositiveIntent I feel {Word}
+IFeelPositiveIntent I am {Word}
 
 IFeelNegativeIntent I feel {Word}
+IFeelNegativeIntent I am {Word}
 
 RewardIntent Trigger reward
 RewardIntent reward me
