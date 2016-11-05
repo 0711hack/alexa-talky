@@ -76,6 +76,7 @@ function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
 }
 
 function weatherForCity(country, city cb) {
+    // a4864a1885b050d176c0c20ef1befbfb
     cb(null, "sunny");
 }
 
