@@ -19,9 +19,6 @@ IFeelPositiveIntent I am {PositiveWord}
 IFeelNegativeIntent I feel {NegativeWord}
 IFeelNegativeIntent I am {NegativeWord}
 
-RewardIntent Trigger reward
-RewardIntent reward me
-
 MyUSCityIsIntent I am living in {USCity}
 MyUSCityIsIntent I am from {USCity}
 MyUSCityIsIntent I'm from {USCity}

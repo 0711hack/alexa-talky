@@ -61,19 +61,23 @@ HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedReques
     // any cleanup logic goes here
 };
 
-function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
+function rewardAndAskNextQuestion(intent, session, response, answerQuestion, nextQuestion) {
     if (!session.attributes.successCounter) {
         session.attributes.successCounter = 0;
     } 
     session.attributes.successCounter = parseInt(session.attributes.successCounter, 10) + 1;
     if ((session.attributes.successCounter % 6) === 0) {
         var speechOutput = {
-        speech: '<speak>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /> ' + nextQuestion + '</speak>',
+        speech: '<speak>' + answerQuestion + '<break strength="x-strong"/>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /><break strength="x-strong"/>' + nextQuestion + '</speak>',
             type: AlexaSkill.speechOutputType.SSML
         };
-        response.ask(speechOutput, "Well done. " + nextQuestion);
+        response.ask(speechOutput, answerQuestion + " Well done. " + nextQuestion);
     } else {
-        response.ask(nextQuestion, nextQuestion);
+        var speechOutput = {
+        speech: '<speak>' + answerQuestion + '<break strength="x-strong"/>' + nextQuestion + '</speak>',
+            type: AlexaSkill.speechOutputType.SSML
+        };
+        response.ask(speechOutput, speechOutput);
     }
 }
 
@@ -123,11 +127,17 @@ HelloWorld.prototype.intentHandlers = {
     // register custom intent handlers
     "MyNameIsIntent": function (intent, session, response) {
         session.attributes.Name = intent.slots.Name.value;
-        rewardAndAskNextQuestion(intent, session, response, "How old are you, " + session.attributes.Name + "?");
+        rewardAndAskNextQuestion(intent, session, response, "Nice to meet you.", "How old are you " + session.attributes.Name + "?");
     },
     "MyAgeIsIntent": function (intent, session, response) {
         session.attributes.Age = intent.slots.Age.value;
-        rewardAndAskNextQuestion(intent, session, response, "Do you want to know something about me, " + session.attributes.Name + "?");
+        var answer = "";
+        if (parseInt(session.attributes.Age, 10) > 29) {
+            answer = "Oh, " + session.attributes.Age + " years. You have grown pretty old.";
+        } else {
+            answer = "Oh, " + session.attributes.Age + " years. You are quite young.";
+        }
+        rewardAndAskNextQuestion(intent, session, response, answer, "Do you want to know something about me, " + session.attributes.Name + "?");
     },
     "MyUSCityIsIntent": function (intent, session, response) {
         session.attributes.City = intent.slots.USCity.value;
@@ -135,9 +145,9 @@ HelloWorld.prototype.intentHandlers = {
         weatherForCity(session.attributes.Coutry, session.attributes.City, function(err, res) {
             if (err) {
                 console.error(err);
-                rewardAndAskNextQuestion(intent, session, response, "Interesting. What was the weather like yesterday?");
+                rewardAndAskNextQuestion(intent, session, response, "Interesting.", "What was the weather like yesterday?");
             } else {
-                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + "day. What was the weather like yesterday?");
+                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + " day.", "What was the weather like yesterday?");
             }            
         });
     },
@@ -147,31 +157,31 @@ HelloWorld.prototype.intentHandlers = {
         weatherForCity(session.attributes.Coutry, session.attributes.City, function(err, res) {
             if (err) {
                 console.error(err);
-                rewardAndAskNextQuestion(intent, session, response, "Interesting. What was the weather like yesterday?");
+                rewardAndAskNextQuestion(intent, session, response, "Interesting.", "What was the weather like yesterday?");
             } else {
-                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + "day. What was the weather like yesterday?");
+                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + " day.", "What was the weather like yesterday?");
             }            
         });
     },
     "MyWeatherIsIntent": function (intent, session, response) {
         session.attributes.Weather = intent.slots.Weather.value;
-        rewardAndAskNextQuestion(intent, session, response, "Always fun to talk about the weather. Isn't it?");
+        rewardAndAskNextQuestion(intent, session, response, "Always fun to talk about the weather. Isn't it?", "Goodbye!");
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);
-        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am " + age + " years old. How do you feel?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am " + age + " years old.", "How do you feel?");
     },
     "AskFeelIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. I am relaxed. What about you?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking.", "I am relaxed. What about you?");
     },
     "AskNameIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. My name is Alexa. How do you feel?");
+        rewardAndAskNextQuestion(intent, session, response, "Thanks for asking.", "My name is Alexa. How do you feel?");
     },
     "IFeelPositiveIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.slots.PositiveWord.value + ". Where are you from?");
+        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.slots.PositiveWord.value + ".", "Where are you from?");
     },
     "IFeelNegativeIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name + ". Where are you from?");
+        rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name + ".", "Where are you from?");
     }
 };
 
