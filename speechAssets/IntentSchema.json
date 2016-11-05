@@ -22,7 +22,7 @@
       "intent": "IFeelPositiveIntent",
       "slots": [
         {
-          "name": "Word",
+          "name": "PositiveWord",
           "type": "PositiveWord"
         }
       ]
@@ -31,7 +31,7 @@
       "intent": "IFeelNegativeIntent",
       "slots": [
         {
-          "name": "Word",
+          "name": "NegativeWord",
           "type": "NegativeWord"
         }
       ]
