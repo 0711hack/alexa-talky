@@ -11,5 +11,7 @@ AskFeelIntent How do you feel
 AskFeelIntent How do you feel Alexa
 
 AskNameIntent What is your name
+AskNameIntent What's your name
 
-PlayIntent crazy music
+RewardIntent Trigger reward
+RewardIntent reward me

@@ -28,13 +28,7 @@
       "intent": "AskNameIntent"
     },
     {
-      "intent": "PlayIntent"
-    },
-    {
-      "intent": "AMAZON.ResumeIntent"
-    },
-    {
-      "intent": "AMAZON.PauseIntent"
+      "intent": "RewardIntent"
     } 
   ]
 }
