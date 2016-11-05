@@ -1,19 +1,13 @@
 {
   "intents": [
     {
-      "intent": "HelloWorldIntent"
-    },
-    {
-      "intent": "RateYourDayIntent",
+      "intent": "MyNameIsIntent",
       "slots": [
         {
-          "name": "DayRating",
-          "type": "DayRating"
+          "name": "Name",
+          "type": "AMAZON.DE_FIRST_NAME"
         }
       ]
-    },
-    {
-      "intent": "AMAZON.HelpIntent"
     }
   ]
 }

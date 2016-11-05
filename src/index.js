@@ -50,9 +50,7 @@ HelloWorld.prototype.eventHandlers.onSessionStarted = function (sessionStartedRe
 
 HelloWorld.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("HelloWorld onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
-    var speechOutput = "How was your day?";
-    var repromptText = "How was your day?";
-    response.ask(speechOutput, repromptText);
+    response.ask("What is your name?", "What is your name?");
 };
 
 HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
@@ -63,14 +61,9 @@ HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedReques
 
 HelloWorld.prototype.intentHandlers = {
     // register custom intent handlers
-    "HelloWorldIntent": function (intent, session, response) {
-        response.tellWithCard("Hello World!", "Hello World", "Hello World!");
-    },
-    "RateYourDayIntent": function (intent, session, response) {
-        response.ask("What is the weather like?", "What is the weather like?");
-    },
-    "AMAZON.HelpIntent": function (intent, session, response) {
-        response.ask("You can say hello to me!", "You can say hello to me!");
+    "MyNameIsIntent": function (intent, session, response) {
+        console.log(JSON.stingify(intent));
+        response.ask("How old are you?", "How old are you?");
     }
 };
 
