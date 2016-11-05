@@ -13,11 +13,11 @@ AskFeelIntent How do you feel Alexa
 AskNameIntent What is your name
 AskNameIntent What's your name
 
-IFeelPositiveIntent I feel {Word}
-IFeelPositiveIntent I am {Word}
+IFeelPositiveIntent I feel {PositiveWord}
+IFeelPositiveIntent I am {PositiveWord}
 
-IFeelNegativeIntent I feel {Word}
-IFeelNegativeIntent I am {Word}
+IFeelNegativeIntent I feel {NegativeWord}
+IFeelNegativeIntent I am {NegativeWord}
 
 RewardIntent Trigger reward
 RewardIntent reward me

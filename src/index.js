@@ -103,7 +103,7 @@ HelloWorld.prototype.intentHandlers = {
         response.ask(speechOutput, "Well done.");
     },
     "IFeelPositiveIntent": function (intent, session, response) {
-        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.attributes.Word);
+        rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.attributes.PositiveWord);
     },
     "IFeelNegativeIntent": function (intent, session, response) {
         rewardAndAskNextQuestion(intent, session, response, "I am sad to hear that " + session.attributes.Name);
