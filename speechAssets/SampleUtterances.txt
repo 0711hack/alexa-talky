@@ -13,3 +13,7 @@ AskFeelIntent How do you feel Alexa
 AskNameIntent What is your name
 
 PlayIntent crazy music
+
+IFeelPositiveIntent I feel {Word}
+
+IFeelNegativeIntent I feel {Word}

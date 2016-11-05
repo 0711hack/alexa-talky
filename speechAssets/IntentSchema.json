@@ -19,6 +19,24 @@
       ]
     },
     {
+      "intent": "IFeelPositiveIntent",
+      "slots": [
+        {
+          "name": "Word",
+          "type": "PositiveWord"
+        }
+      ]
+    },
+    {
+      "intent": "IFeelNegativeIntent",
+      "slots": [
+        {
+          "name": "Word",
+          "type": "NegativeWord"
+        }
+      ]
+    },
+    {
       "intent": "AskAgeIntent"
     },
     {

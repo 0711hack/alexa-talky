@@ -10,12 +10,6 @@
 
 'use strict';
 
-var crypto = require("crypto");
-
-function sha256(data) {
-    return crypto.createHash("sha256").update(data).digest("base64");
-}
-
 function AlexaSkill(appId) {
     this._appId = appId;
 }

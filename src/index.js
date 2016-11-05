@@ -71,21 +71,26 @@ HelloWorld.prototype.intentHandlers = {
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);
-        response.ask("Thanks for asking. I am " + age + " years old. How do you feel?", "Thanks for asking. I am " + age + " years old. How do you feel?");
+        response.ask("Thanks for asking. I am " + age + " years old. How do you feel?");
     },
     "AskFeelIntent": function (intent, session, response) {
-
         response.ask("Thanks for asking. I am relaxed. What about you?");
     },
     "AskNameIntent": function (intent, session, response) {
-        response.ask("Thanks for asking. My name is Alexa.", "Thanks for asking. My name is Alexa.");
+        response.ask("Thanks for asking. My name is Alexa. How do you feel?");
     },
     "PlayIntent": function(intent, session, response) {
         var speechOutput = {
             speech: '<speak><audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /></speak>',
             type: AlexaSkill.speechOutputType.SSML
         };
-        response.ask(speechOutput, "Thanks for asking. My name is Alexa.");
+        response.ask(speechOutput);
+    },
+    "IFeelPositiveIntent": function (intent, session, response) {
+        response.ask("I am happy to hear that you feel " + intent.attributes.Word);
+    },
+    "IFeelNegativeIntent": function (intent, session, response) {
+        response.ask("I am sad to hear that " + session.attributes.Name);
     }
 };
 
