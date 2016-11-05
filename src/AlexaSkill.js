@@ -215,7 +215,7 @@ Response.prototype = (function () {
                             "offsetInMilliseconds": 0
                         }
                     }
-                  }]
+                }],
                 shouldEndSession: false
             }));
         },
