@@ -8,6 +8,8 @@
     or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
 
+'use strict';
+
 /**
  * This simple sample has no external dependencies or session management, and shows the most basic
  * example of how to create a Lambda function for handling Alexa Skill requests.
@@ -21,7 +23,7 @@
 /**
  * App ID for the skill
  */
-var APP_ID = undefined; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
+var APP_ID; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
 
 /**
  * The AlexaSkill prototype and helper functions
@@ -43,8 +45,7 @@ HelloWorld.prototype = Object.create(AlexaSkill.prototype);
 HelloWorld.prototype.constructor = HelloWorld;
 
 HelloWorld.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
-    console.log("HelloWorld onSessionStarted requestId: " + sessionStartedRequest.requestId
-        + ", sessionId: " + session.sessionId);
+    console.log("HelloWorld onSessionStarted requestId: " + sessionStartedRequest.requestId + ", sessionId: " + session.sessionId);
     // any initialization logic goes here
 };
 
@@ -54,8 +55,7 @@ HelloWorld.prototype.eventHandlers.onLaunch = function (launchRequest, session, 
 };
 
 HelloWorld.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
-    console.log("HelloWorld onSessionEnded requestId: " + sessionEndedRequest.requestId
-        + ", sessionId: " + session.sessionId);
+    console.log("HelloWorld onSessionEnded requestId: " + sessionEndedRequest.requestId + ", sessionId: " + session.sessionId);
     // any cleanup logic goes here
 };
 
@@ -81,13 +81,18 @@ HelloWorld.prototype.intentHandlers = {
         response.ask("Thanks for asking. My name is Alexa.", "Thanks for asking. My name is Alexa.");
     },
     "PlayIntent": function(intent, session, response) {
-        response.play("https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3");
+        var speechOutput = {
+            speech: '<speak><audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /></speak>',
+            type: AlexaSkill.speechOutputType.SSML
+        };
+        response.ask(speechOutput, "Thanks for asking. My name is Alexa.");
     }
 };
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
     // Create an instance of the HelloWorld skill.
+    console.log(JSON.stringify(event));
     var helloWorld = new HelloWorld();
     helloWorld.execute(event, context);
 };

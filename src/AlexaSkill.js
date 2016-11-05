@@ -23,7 +23,7 @@ function AlexaSkill(appId) {
 AlexaSkill.speechOutputType = {
     PLAIN_TEXT: 'PlainText',
     SSML: 'SSML'
-}
+};
 
 AlexaSkill.prototype.requestHandlers = {
     LaunchRequest: function (event, context, response) {
@@ -87,14 +87,18 @@ AlexaSkill.prototype.eventHandlers = {
  */
 AlexaSkill.prototype.intentHandlers = {};
 
+var Response = function (context, session) {
+    this._context = context;
+    this._session = session;
+};
+
 AlexaSkill.prototype.execute = function (event, context) {
     try {
         console.log("session applicationId: " + event.session.application.applicationId);
 
         // Validate that this request originated from authorized source.
         if (this._appId && event.session.application.applicationId !== this._appId) {
-            console.log("The applicationIds don't match : " + event.session.application.applicationId + " and "
-                + this._appId);
+            console.log("The applicationIds don't match : " + event.session.application.applicationId + " and " + this._appId);
             throw "Invalid applicationId";
         }
 
@@ -115,11 +119,6 @@ AlexaSkill.prototype.execute = function (event, context) {
     }
 };
 
-var Response = function (context, session) {
-    this._context = context;
-    this._session = session;
-};
-
 function createSpeechObject(optionsParam) {
     if (optionsParam && optionsParam.type === 'SSML') {
         return {
@@ -130,7 +129,7 @@ function createSpeechObject(optionsParam) {
         return {
             type: optionsParam.type || 'PlainText',
             text: optionsParam.speech || optionsParam
-        }
+        };
     }
 }
 
@@ -205,17 +204,11 @@ Response.prototype = (function () {
         play: function (url) {
             this._context.succeed(buildSpeechletResponse({
                 session: this._session,
-                directives: [{
-                    "type": "AudioPlayer.Play",
-                    "playBehavior": "ENQUEUE",
-                    "audioItem": {
-                        "stream": {
-                            "token": sha256(url),
-                            "url": url,
-                            "offsetInMilliseconds": 0
-                        }
-                    }
-                }],
+                output: {
+                    type: "SSML",
+                    ssml: '<speak>test</speak>'
+                },
+                reprompt: "test",
                 shouldEndSession: false
             }));
         },
