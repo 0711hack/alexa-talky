@@ -75,7 +75,7 @@ function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
     }
 }
 
-function weatherForCity(country, city cb) {
+function weatherForCity(country, city, cb) {
     cb(null, "sunny");
 }
 
@@ -97,7 +97,14 @@ HelloWorld.prototype.intentHandlers = {
     "MyDECityIsIntent": function (intent, session, response) {
         session.attributes.City = intent.slots.DECity.value;
         session.attributes.Coutry = "DE";
-        rewardAndAskNextQuestion(intent, session, response, "Do you want to know something about me, " + session.attributes.Name + "?");
+        weatherForCity(session.attributes.Coutry, session.attributes.City, function(err, res) {
+            if (err) {
+                console.error(err);
+                rewardAndAskNextQuestion(intent, session, response, "Interesting. What was the weather like yesterday?");
+            } else {
+                rewardAndAskNextQuestion(intent, session, response, "Nice, seems like you are having a " + res + "day. What was the weather like yesterday?");
+            }            
+        });        
     },
     "AskAgeIntent": function (intent, session, response) {
         var age = 3 + parseInt(session.attributes.Age, 10);
