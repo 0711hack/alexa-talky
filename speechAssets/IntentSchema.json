@@ -71,9 +71,6 @@
     },
     {
       "intent": "AskNameIntent"
-    },
-    {
-      "intent": "RewardIntent"
     }
   ]
 }

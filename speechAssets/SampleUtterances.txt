@@ -24,11 +24,13 @@ RewardIntent reward me
 
 MyUSCityIsIntent I am living in {USCity}
 MyUSCityIsIntent I am from {USCity}
+MyUSCityIsIntent I'm from {USCity}
 MyUSCityIsIntent I am located at {USCity}
 MyUSCityIsIntent I live in {USCity}
 
 MyDECityIsIntent I am living in {DECity}
 MyDECityIsIntent I am from {DECity}
+MyDECityIsIntent I'm from {DECity}
 MyDECityIsIntent I am located at {DECity}
 MyDECityIsIntent I live in {DECity}
 

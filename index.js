@@ -66,7 +66,7 @@ function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
         session.attributes.successCounter = 0;
     } 
     session.attributes.successCounter = parseInt(session.attributes.successCounter, 10) + 1;
-    if ((session.attributes.successCounter % 3) === 0) {
+    if ((session.attributes.successCounter % 6) === 0) {
         var speechOutput = {
         speech: '<speak>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /> ' + nextQuestion + '</speak>',
             type: AlexaSkill.speechOutputType.SSML
@@ -166,13 +166,6 @@ HelloWorld.prototype.intentHandlers = {
     },
     "AskNameIntent": function (intent, session, response) {
         rewardAndAskNextQuestion(intent, session, response, "Thanks for asking. My name is Alexa. How do you feel?");
-    },
-    "RewardIntent": function(intent, session, response) {
-        var speechOutput = {
-            speech: '<speak>Well done. Enjoy and dance. <audio src="https://s3-eu-west-1.amazonaws.com/alexa-talky/crazy.mp3" /></speak>',
-            type: AlexaSkill.speechOutputType.SSML
-        };
-        response.ask(speechOutput, "Well done.");
     },
     "IFeelPositiveIntent": function (intent, session, response) {
         rewardAndAskNextQuestion(intent, session, response, "I am happy to hear that you feel " + intent.slots.PositiveWord.value + ". Where are you from?");
