@@ -75,6 +75,10 @@ function rewardAndAskNextQuestion(intent, session, response, nextQuestion) {
     }
 }
 
+function weatherForCity(country, city cb) {
+    cb(null, "sunny");
+}
+
 HelloWorld.prototype.intentHandlers = {
     // register custom intent handlers
     "MyNameIsIntent": function (intent, session, response) {
@@ -83,6 +87,16 @@ HelloWorld.prototype.intentHandlers = {
     },
     "MyAgeIsIntent": function (intent, session, response) {
         session.attributes.Age = intent.slots.Age.value;
+        rewardAndAskNextQuestion(intent, session, response, "Do you want to know something about me, " + session.attributes.Name + "?");
+    },
+    "MyUSCityIsIntent": function (intent, session, response) {
+        session.attributes.City = intent.slots.USCity.value;
+        session.attributes.Coutry = "US";
+        rewardAndAskNextQuestion(intent, session, response, "");
+    },
+    "MyDECityIsIntent": function (intent, session, response) {
+        session.attributes.City = intent.slots.DECity.value;
+        session.attributes.Coutry = "DE";
         rewardAndAskNextQuestion(intent, session, response, "Do you want to know something about me, " + session.attributes.Name + "?");
     },
     "AskAgeIntent": function (intent, session, response) {

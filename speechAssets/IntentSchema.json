@@ -19,6 +19,24 @@
       ]
     },
     {
+      "intent": "MyUSCityIsIntent",
+      "slots": [
+        {
+          "name": "USCity",
+          "type": "AMAZON.US_CITY"
+        }
+      ]
+    },
+    {
+      "intent": "MyDECityIsIntent",
+      "slots": [
+        {
+          "name": "DECity",
+          "type": "AMAZON.DE_CITY"
+        }
+      ]
+    },
+    {
       "intent": "IFeelPositiveIntent",
       "slots": [
         {
@@ -47,6 +65,6 @@
     },
     {
       "intent": "RewardIntent"
-    } 
+    }
   ]
 }
