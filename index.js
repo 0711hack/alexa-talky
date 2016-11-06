@@ -11,6 +11,8 @@
 'use strict';
 
 var request = require("request");
+var AWS = require('aws-sdk');
+var lambda = new AWS.Lambda();
 
 /**
  * This simple sample has no external dependencies or session management, and shows the most basic
@@ -69,7 +71,11 @@ function rewardAndAskNextQuestion(intent, session, response, answerQuestion, nex
     } 
     session.attributes.successCounter = parseInt(session.attributes.successCounter, 10) + 1;
     if ((session.attributes.successCounter % 6) === 0) {
-        printer.print(function(err) {
+        lambda.invoke({
+            FunctionName: '',
+            InvocationType: 'Event',
+            Payload: JSON.stringify({})
+        }, function(err) {
             if (err) {
                 console.error(err);
             }
@@ -198,5 +204,17 @@ exports.handler = function (event, context) {
     console.log(JSON.stringify(event));
     var helloWorld = new HelloWorld();
     helloWorld.execute(event, context);
+};
+
+// Create the handler that responds to the Print Request.
+exports.handlerPrinter = function (event, context) {
+    console.log(JSON.stringify(event));
+    printer.print(function(err, res) {
+        if (err) {
+            context.fail(err);
+        } else {
+            context.succeed(res);
+        }
+    });
 };
 
